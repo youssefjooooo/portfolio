@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   CSS Custom Properties
+───────────────────────────────────────────── */
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-top: rgba(255, 255, 255, 0.20);  /* hairline highlight */
+}
+
+/* ─────────────────────────────────────────────
+   Base Reset
+───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   Glass System — Component Layer
+───────────────────────────────────────────── */
+@layer components {
+  /* Standard glass panel */
+  .glass-surface {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--glass-border);
+    border-top-color: var(--glass-top);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Dense glass (post-scroll Navbar, hover states) */
+  .glass-dense {
+    background-color: rgba(255, 255, 255, 0.065);
+    backdrop-filter: blur(64px);
+    -webkit-backdrop-filter: blur(64px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-top-color: rgba(255, 255, 255, 0.30);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.60),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+
+  /* Hover-state card glass */
+  .glass-card-hover {
+    background-color: rgba(255, 255, 255, 0.055);
+    backdrop-filter: blur(64px);
+    -webkit-backdrop-filter: blur(64px);
+    border: 1px solid rgba(255, 255, 255, 0.40);
+    border-top-color: rgba(255, 255, 255, 0.40);
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Custom Scrollbar
+───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.20);
+}
+
+/* ─────────────────────────────────────────────
+   Selection
+───────────────────────────────────────────── */
+::selection {
+  background: rgba(56, 189, 248, 0.25);
+  color: #ffffff;
+}
