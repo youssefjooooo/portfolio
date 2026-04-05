@@ -2,29 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─────────────────────────────────────────────
-   CSS Custom Properties
-───────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════
+   MONOCHROMATIC DARK — Design System
+   Inspired by claude.com/product — clean, editorial,
+   generous whitespace, minimal glass, bold typography.
+═══════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties ───────────────────────── */
 :root {
-  --bg: #000000;
-  --fg: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-top: rgba(255, 255, 255, 0.20);  /* hairline highlight */
+  --bg:         #0B0B0B;
+  --surface:    #141414;
+  --elevated:   #1A1A1A;
+  --fg:         #FFFFFF;
+  --fg-muted:   rgba(255,255,255,0.55);
+  --fg-subtle:  rgba(255,255,255,0.28);
+
+  /* Glass tokens — very restrained */
+  --glass-bg:       rgba(255,255,255,0.04);
+  --glass-bg-hover: rgba(255,255,255,0.07);
+  --glass-border:   rgba(255,255,255,0.08);
+  --glass-border-h: rgba(255,255,255,0.16);
+  --glass-ring:     0 0 0 1px rgba(255,255,255,0.08);
+  --glass-ring-h:   0 0 0 1px rgba(255,255,255,0.14);
+  --glass-shadow:   0 4px 32px rgba(0,0,0,0.50);
+  --glass-inset:    inset 0 1px 0 rgba(255,255,255,0.07);
 }
 
-/* ─────────────────────────────────────────────
-   Base Reset
-───────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/* ── Base Reset ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; padding: 0; margin: 0; }
 
 html {
   scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing:  antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -32,67 +41,74 @@ body {
   background: var(--bg);
   color: var(--fg);
   overflow-x: hidden;
+  /* Subtle dot grid — very faint */
+  background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-attachment: fixed;
 }
 
-/* ─────────────────────────────────────────────
-   Glass System — Component Layer
-───────────────────────────────────────────── */
+/* ── Arabic font via Cairo (RTL) ─────────────────── */
+[dir="rtl"],
+[dir="rtl"] * {
+  font-family: var(--font-cairo), 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+}
+
+/* Ensure Arabic text aligns correctly */
+[dir="rtl"] p,
+[dir="rtl"] span,
+[dir="rtl"] li {
+  text-align: start;
+}
+
+/* ── Glass Component Classes ─────────────────────── */
 @layer components {
+
   /* Standard glass panel */
   .glass-surface {
-    background-color: var(--glass-bg);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    border-top-color: var(--glass-top);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    box-shadow: var(--glass-ring), var(--glass-shadow), var(--glass-inset);
   }
 
-  /* Dense glass (post-scroll Navbar, hover states) */
+  /* Dense — hover state */
   .glass-dense {
-    background-color: rgba(255, 255, 255, 0.065);
-    backdrop-filter: blur(64px);
-    -webkit-backdrop-filter: blur(64px);
-    border: 1px solid rgba(255, 255, 255, 0.20);
-    border-top-color: rgba(255, 255, 255, 0.30);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.60),
-      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    background: var(--glass-bg-hover);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border-h);
+    box-shadow: var(--glass-ring-h), 0 8px 40px rgba(0,0,0,0.60), inset 0 1px 0 rgba(255,255,255,0.10);
   }
 
-  /* Hover-state card glass */
-  .glass-card-hover {
-    background-color: rgba(255, 255, 255, 0.055);
-    backdrop-filter: blur(64px);
-    -webkit-backdrop-filter: blur(64px);
-    border: 1px solid rgba(255, 255, 255, 0.40);
-    border-top-color: rgba(255, 255, 255, 0.40);
+  /* Section eyebrow label */
+  .eyebrow {
+    @apply text-[11px] text-white/30 uppercase tracking-[0.25em] font-medium;
+  }
+
+  /* Gradient heading text — monochromatic */
+  .text-gradient {
+    @apply bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent;
+  }
+
+  /* Section divider */
+  .divider {
+    @apply w-full border-t border-white/[0.06] my-2;
   }
 }
 
-/* ─────────────────────────────────────────────
-   Custom Scrollbar
-───────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #000;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.10);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.20);
-}
+/* ── Scrollbar ───────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
 
-/* ─────────────────────────────────────────────
-   Selection
-───────────────────────────────────────────── */
-::selection {
-  background: rgba(56, 189, 248, 0.25);
-  color: #ffffff;
+/* ── Selection ───────────────────────────────────── */
+::selection { background: rgba(255,255,255,0.15); color: #fff; }
+
+/* ── Focus visible ───────────────────────────────── */
+:focus-visible { outline: 2px solid rgba(255,255,255,0.40); outline-offset: 2px; border-radius: 4px; }
+
+/* ── Backdrop-filter fallback ────────────────────── */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-surface, .glass-dense { background: rgba(20,20,20,0.96); }
 }

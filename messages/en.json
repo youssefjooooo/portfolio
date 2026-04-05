@@ -1,0 +1,118 @@
+{
+  "nav": {
+    "work": "Work",
+    "stack": "Stack",
+    "about": "About",
+    "contact": "Contact",
+    "hire": "Hire Me"
+  },
+  "hero": {
+    "badge": "Available for projects",
+    "name_1": "Youssef",
+    "name_2": "Mahmoud",
+    "tagline_1": "Fullstack Engineer &",
+    "tagline_2": "Performance-Driven Builder.",
+    "body": "I build fast, scalable web applications where clean architecture meets intentional design. From high-performance Next.js interfaces to robust backends with Encore.ts, I create digital products built to scale and engineered to convert.",
+    "cta_primary": "View My Work",
+    "cta_secondary": "Let's Connect "
+  },
+  "stats": {
+    "v1": "3+",
+    "l1": "Years Building",
+    "v2": "20+",
+    "l2": "Projects Shipped",
+    "v3": "14+",
+    "l3": "Technologies",
+    "v4": "Open",
+    "l4": "to Work"
+  },
+  "philosophy": {
+    "tag": "The Philosophy",
+    "headline_1": "Systems",
+    "headline_2": "Over Features",
+    "body": "I don't just build layouts — I build systems. Every project is approached with a product mindset, prioritizing structure, scalability, and real-world business impact. Whether it's a brokerage platform or a custom SEO-driven solution, the goal is simple: efficiency, reliability, and execution.",
+    "p1_title": "Product Mindset",
+    "p1_body": "Every feature is weighed against business outcomes — not just technical elegance.",
+    "p2_title": "Scalable Architecture",
+    "p2_body": "Systems designed to handle 10x growth without rewrites or firefighting.",
+    "p3_title": "Execution Over Theory",
+    "p3_body": "Shipping working software is the only metric that matters in the real world.",
+    "node_core": "Core",
+    "node_frontend": "Frontend",
+    "node_backend": "Backend",
+    "node_data": "Data",
+    "node_infra": "Infra"
+  },
+  "work": {
+    "tag": "Selected Work",
+    "headline_1": "Projects that",
+    "headline_2": "push boundaries",
+    "p1_title": "Brokerage Platform",
+    "p1_desc": "Full-stack trading and investment platform with real-time data feeds, portfolio management, and secure transaction processing at scale.",
+    "p1_cat": "fullstack",
+    "p1_tags": "Next.js,Encore.ts,PostgreSQL,Redis,WebSocket",
+    "p2_title": "Encore.ts Service Mesh",
+    "p2_desc": "High-performance microservices infrastructure serving 50M+ requests/day with sub-2ms p99 latency, built entirely in TypeScript.",
+    "p2_cat": "backend",
+    "p2_tags": "Encore.ts,TypeScript,Kubernetes,gRPC,Redis",
+    "p3_title": "AI-Powered SEO Engine",
+    "p3_desc": "ML-driven content optimization platform that analyzes competitive gaps and auto-generates SEO strategies, boosting organic traffic by 3x.",
+    "p3_cat": "creative",
+    "p3_tags": "Next.js,Python,OpenAI,PostgreSQL,Vercel",
+    "p4_title": "Agency Web Suite",
+    "p4_desc": "End-to-end client delivery platform combining CMS, analytics, and deployment automation for rapid business site launches.",
+    "p4_cat": "fullstack",
+    "p4_tags": "Next.js,Sanity,Tailwind,Framer Motion",
+    "p5_title": "Next.js Component Library",
+    "p5_desc": "Zero-runtime design system with 60+ accessible components, Storybook docs, and automated visual regression testing.",
+    "p5_cat": "frontend",
+    "p5_tags": "React,TypeScript,Radix UI,Storybook"
+  },
+  "stack": {
+    "tag": "Technology Stack",
+    "headline_1": "Tools I",
+    "headline_2": "Master"
+  },
+  "building": {
+    "tag": "What I'm Building Now",
+    "headline": "Always Shipping",
+    "agency_tag": "The Agency",
+    "agency_title": "End-to-End Digital Solutions",
+    "agency_body": "I am currently scaling a web agency dedicated to delivering end-to-end digital solutions. We combine design, engineering, and SEO to help businesses grow through high-quality web products.",
+    "rd_tag": "Current R&D",
+    "rd_title": "Pushing Backend Limits",
+    "rd_body": "Deep-diving into Encore.ts and TypeScript to push the boundaries of backend performance, ensuring the systems I build today are ready for the traffic of tomorrow.",
+    "live": "LIVE"
+  },
+  "about": {
+    "tag": "Beyond the Code",
+    "headline": "The Human Behind the Terminal",
+    "body": "While backend architecture is my foundation, I have a deep appreciation for clean layouts and intuitive user interfaces. I consider myself a lifelong learner, constantly exploring new design trends and engineering patterns to bridge the gap between complex logic and stunning digital experiences.",
+    "location": "Continuous Learner",
+    "status": "Tech Explorer",
+    "interest_ui_design": "UI Design",
+    "interest_ux_research": "UX Research",
+    "interest_animations": "Micro-Animations",
+    "interest_aesthetics": "Visual Harmony"
+  },
+  "contact": {
+    "tag": "Get in Touch",
+    "headline_1": "Let's Build Something",
+    "headline_2": "Scalable.",
+    "body": "Currently taking on select projects through my agency and exploring innovative collaborations.",
+    "email": "hello@youssefmahmoud.com",
+    "cta_secondary": "View GitHub"
+  },
+  "footer": {
+    "copy": "Youssef Mahmoud",
+    "built_messages": [
+      "Built with Next.js and coffee that gets cold before the task is done",
+      "Built with Next.js and coffee made faster than the deployment",
+      "Built with Next.js and coffee that runs out while writing the first function",
+      "Built with Next.js and coffee that disappears with every refresh",
+      "Built with Next.js and coffee that runs faster than the bugs",
+      "Built with Next.js and coffee that finishes before I understand the problem",
+      "Built with Next.js and coffee that's gone while I'm still setting up"
+    ]
+  }
+}

@@ -1,54 +1,57 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        sans: ["var(--font-cairo)", "system-ui", "sans-serif"],
       },
-      colors: {
-        chroma: {
-          sky: '#38bdf8',
-          green: '#4ade80',
-          purple: '#a78bfa',
-          amber: '#fbbf24',
-        },
-      },
+      // ── Monochromatic shadows only ──────────────────────────────────
       boxShadow: {
-        // Chroma-shadows: large blur, low opacity, functional color per category
-        'chroma-sky': '0 0 60px 20px rgba(56, 189, 248, 0.15)',
-        'chroma-green': '0 0 60px 20px rgba(74, 222, 128, 0.15)',
-        'chroma-purple': '0 0 60px 20px rgba(167, 139, 250, 0.15)',
-        'chroma-amber': '0 0 60px 20px rgba(251, 191, 36, 0.15)',
-        'glass': '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)',
-        'glass-dense': '0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.14)',
+        glass: "0 0 0 1px rgba(255,255,255,0.08), 0 4px 24px rgba(0,0,0,0.40)",
+        "glass-lg":
+          "0 0 0 1px rgba(255,255,255,0.14), 0 12px 48px rgba(0,0,0,0.55)",
+        "glow-sm": "0 0 24px rgba(255,255,255,0.06)",
+        "glow-md": "0 0 48px rgba(255,255,255,0.08)",
       },
-      animation: {
-        // CTA shimmer: diagonal light streak on 3s loop
-        'shimmer': 'shimmer 3s ease-in-out infinite',
-        // Tech stack ticker
-        'infinite-scroll': 'infinite-scroll 35s linear infinite',
-        // Availability pulse
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4,0,0.6,1) infinite',
-      },
+      // ── Keyframes ──────────────────────────────────────────────────
       keyframes: {
         shimmer: {
-          '0%':   { transform: 'translateX(-160%) skewX(-20deg)' },
-          '100%': { transform: 'translateX(360%) skewX(-20deg)' },
+          "0%": { transform: "translateX(-160%) skewX(-20deg)" },
+          "100%": { transform: "translateX(360%)  skewX(-20deg)" },
         },
-        'infinite-scroll': {
-          '0%':   { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+        "infinite-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 3s ease-in-out infinite",
+        "infinite-scroll": "infinite-scroll 40s linear infinite",
+        float: "float 4s ease-in-out infinite",
+        blink: "blink 1.1s step-start infinite",
+        "fade-in": "fade-in 0.4s ease forwards",
       },
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;

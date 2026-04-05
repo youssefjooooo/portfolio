@@ -1,94 +1,109 @@
 /**
  * Hero — Server Component
  *
- * Static shell is server-rendered for optimal LCP and SEO.
- * Interactive/animated children (<LetterReveal />, <RevealText />, <GlassButton />)
- * are Client Components that hydrate after the initial paint.
- *
- * The actual text content is present in the SSR HTML, so search engines
- * and LCP metrics see it immediately.
+ * Static shell server-rendered for optimal LCP and SEO.
+ * Client sub-components (LetterReveal, RevealText, GlassButton, FloatingBadge)
+ * hydrate for their animations without blocking first paint.
  */
 
-import LetterReveal from '@/components/LetterReveal'
-import RevealText from '@/components/RevealText'
-import GlassButton from '@/components/ui/GlassButton'
+import { getLocale, getTranslations } from "next-intl/server";
+import LetterReveal from "@/components/LetterReveal";
+import RevealText from "@/components/RevealText";
+import GlassButton from "@/components/ui/GlassButton";
+import { ArrowLeft } from "lucide-react";
+const HERO_TECH = [
+  "Next.js 15",
+  "TypeScript",
+  "Encore.ts",
+  "PostgreSQL",
+  "Tailwind CSS",
+  "Framer Motion",
+] as const;
 
-export default function Hero() {
+export default async function Hero() {
+  const t = await getTranslations("hero");
+  const isEnglish = (await getLocale()) === "en";
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-28 pb-20 text-center overflow-hidden">
-
       {/* ── Availability badge ───────────────────────── */}
       <RevealText delay={0} className="mb-10">
-        <div
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs text-slate-400 tracking-[0.18em] uppercase glass-surface"
-        >
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-surface text-xs text-white/40 tracking-[0.18em] uppercase">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75" />
+            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white/80" />
           </span>
-          Available for projects
+          {t("badge")}
         </div>
       </RevealText>
 
-      {/* ── Heading — letter stagger ─────────────────── */}
-      <div className="space-y-0 mb-10" aria-label="Creative Technologist & Engineer">
-        {/* Line 1 */}
-        <div className="text-[clamp(2.75rem,8vw,6.5rem)] font-bold tracking-tighter leading-[0.92] text-white">
-          <LetterReveal text="Creative" delay={0.08} />
+      {/* ── Name — letter stagger ───────────────────── */}
+      <h1 className="mb-4" aria-label={`${t("name_1")} ${t("name_2")}`}>
+        <div className="text-[clamp(3rem,9vw,7.5rem)] font-bold tracking-tighter leading-[0.88] scale-95">
+          <LetterReveal text={t("name_1")} delay={0.1} className="text-white" />
         </div>
-        {/* Line 2 — gradient */}
-        <div className="text-[clamp(2.75rem,8vw,6.5rem)] font-bold tracking-tighter leading-[0.92]">
+        <div className="text-[clamp(3rem,9vw,7.5rem)] font-bold tracking-tighter leading-[0.88]">
           <LetterReveal
-            text="Technologist"
-            delay={0.28}
-            className="bg-gradient-to-r from-sky-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent"
+            text={t("name_2")}
+            delay={0.3}
+            className="text-gradient"
           />
         </div>
-        {/* Line 3 — muted */}
-        <div className="text-[clamp(2.75rem,8vw,6.5rem)] font-bold tracking-tighter leading-[0.92] text-white/25">
-          <LetterReveal text="& Engineer" delay={0.5} />
-        </div>
-      </div>
+      </h1>
 
-      {/* ── Sub-heading ──────────────────────────────── */}
+      {/* ── Role tagline ─────────────────────────────── */}
       <RevealText
-        delay={0.82}
-        className="max-w-[520px] text-slate-400 text-lg md:text-xl leading-relaxed mb-12"
-      >
-        <p>
-          Building pixel-perfect, performant interfaces where{' '}
-          <em className="not-italic text-white/70">design meets engineering precision</em>.
+        delay={0.7}
+        className="mb-6 md:mb-10 flex items-center justify-center">
+        <div className="text-sm md:text-lg font-medium tracking-tight space-y-0.5 mt-4 md:mt-8 ">
+          <div className="text-white/60">{t("tagline_1")}</div>
+          <div className="text-white/30">{t("tagline_2")}</div>
+        </div>
+      </RevealText>
+
+      {/* ── Body copy ───────────────────────────────── */}
+      <RevealText
+        delay={0.95}
+        className="w-[90%] md:w-[60%] text-white/40 md:text-lg leading-relaxed mb-12 text-center flex items-center justify-center">
+        <p className="text-center flex items-center justify-center">
+          {t("body")}
         </p>
       </RevealText>
 
-      {/* ── CTAs ─────────────────────────────────────── */}
-      <RevealText delay={1.05} className="flex flex-col sm:flex-row items-center gap-3">
+      {/* ── CTAs ────────────────────────────────────── */}
+      <RevealText delay={1.15} className="flex flex-row items-center gap-3">
         <GlassButton variant="primary" href="#work">
-          View my work
+          {t("cta_primary")}
         </GlassButton>
         <GlassButton variant="ghost" href="#contact">
-          Let&apos;s connect →
+          {t("cta_secondary")}{" "}
+          <ArrowLeft size={16} className={`${isEnglish ? "rotate-180" : ""}`} />
         </GlassButton>
       </RevealText>
 
-      {/* ── Scroll indicator ─────────────────────────── */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none select-none">
-        <span className="text-[10px] tracking-[0.2em] uppercase text-slate-600">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-white/10 to-transparent" />
-      </div>
+      {/* ── Inline Tech Stack ───────────────────────── */}
+      <RevealText
+        delay={1.35}
+        className="mt-14 w-full max-w-2xl mx-auto hidden sm:block">
+        <p className="text-[10px] text-center w-full flex items-center justify-center uppercase tracking-[0.2em] text-white/20 mb-4 select-none">
+          Powered By
+        </p>
+        <div className="flex flex-wrap justify-center items-center gap-2.5">
+          {HERO_TECH.map((tech) => (
+            <span
+              key={tech}
+              className="px-3.5 py-1.5 rounded-lg border border-white/[0.04] bg-white/[0.02] text-white/40 text-[11px] font-medium tracking-wide hover:bg-white/[0.06] hover:text-white/70 hover:border-white/[0.08] transition-all duration-300 select-none cursor-default">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </RevealText>
 
-      {/* ── Decorative chroma blur behind heading ────── */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-1/3 -translate-y-1/2 flex justify-center"
-      >
-        <div
-          className="w-[700px] h-[300px] blur-[120px] opacity-[0.06] rounded-full"
-          style={{
-            background: 'linear-gradient(90deg, #38bdf8 0%, #4ade80 100%)',
-          }}
-        />
-      </div>
+      {/* ── Scroll indicator ─────────────────────────── */}
+      {/* <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none select-none">
+        <span className="text-[10px] tracking-[0.22em] uppercase text-white/20">Scroll</span>
+        <div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent" />
+      </div> */}
     </section>
-  )
+  );
 }

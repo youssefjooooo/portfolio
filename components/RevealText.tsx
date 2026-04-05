@@ -1,33 +1,43 @@
 'use client'
 
 /**
- * RevealText
+ * RevealText — Scroll-triggered reveal.
  *
- * Block-level reveal: the whole element fades in from blur(10px) to blur(0).
- * Use for paragraphs, sub-headings, and CTA groups.
- * For letter-by-letter stagger on headings, use <LetterReveal />.
+ * Fires when the element enters the viewport (useInView), not on mount.
+ * This creates the claude.com-style "content materialises as you scroll" effect.
  */
 
-import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef, type ReactNode } from 'react'
 
 interface RevealTextProps {
   children: ReactNode
   className?: string
-  /** Seconds before the animation starts */
   delay?: number
+  y?: number
+  /** Disable blur — useful when the element has complex children */
+  noBlur?: boolean
 }
 
-export default function RevealText({ children, className = '', delay = 0 }: RevealTextProps) {
+export default function RevealText({
+  children,
+  className = '',
+  delay = 0,
+  y = 22,
+  noBlur = false,
+}: RevealTextProps) {
+  const ref    = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px 0px' })
+
   return (
     <motion.div
-      initial={{ opacity: 0, filter: 'blur(10px)', y: 16 }}
-      animate={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
-      transition={{
-        duration: 0.85,
-        delay,
-        ease: [0.16, 1, 0.3, 1], // custom spring-like ease
-      }}
+      ref={ref}
+      initial={{ opacity: 0, y, ...(noBlur ? {} : { filter: 'blur(6px)' }) }}
+      animate={inView
+        ? { opacity: 1, y: 0, ...(noBlur ? {} : { filter: 'blur(0px)' }) }
+        : {}
+      }
+      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
     >
       {children}

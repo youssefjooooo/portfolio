@@ -1,82 +1,62 @@
-import type { Metadata, Viewport } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import './globals.css'
-import Navbar from '@/components/Navbar'
-import ClientOnly from '@/components/ClientOnly'
-import MouseFollower from '@/components/MouseFollower'
+/**
+ * Root Layout — sets <html lang dir> and loads fonts.
+ * Fonts: Comfortaa (English) + Cairo (Arabic).
+ * Both are loaded as CSS variables so CSS and Tailwind can reference them.
+ */
 
-/* ─── Metadata ────────────────────────────────── */
+import type { Metadata, Viewport } from "next";
+import { Cairo } from "next/font/google";
+import { getLocale } from "next-intl/server";
+import "./globals.css";
+
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  variable: "--font-cairo",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: 'Portfolio — Creative Technologist & Engineer',
-    template: '%s | Portfolio',
+    default: "Youssef Mahmoud — Fullstack Engineer",
+    template: "%s | Youssef Mahmoud",
   },
   description:
-    'High-performance portfolio showcasing pixel-perfect frontend engineering, creative development, and full-stack architecture.',
-  keywords: ['Next.js', 'TypeScript', 'React', 'Framer Motion', 'Frontend Engineer'],
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    title: 'Portfolio — Creative Technologist & Engineer',
-    description: 'Building performant interfaces where design meets engineering precision.',
+    "I build fast, scalable web applications where clean architecture meets intentional design.",
+  authors: [{ name: "Youssef Mahmoud" }],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
-}
+  openGraph: {
+    type: "website",
+    title: "Youssef Mahmoud — Fullstack Engineer & Performance-Driven Builder",
+    description: "Building scalable digital products engineered to convert.",
+  },
+};
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
-  colorScheme: 'dark',
-}
+  themeColor: "#0B0B0B",
+  colorScheme: "dark",
+};
 
-/* ─── Root Layout ─────────────────────────────── */
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const locale = await getLocale();
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
-    <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
-      <body className="bg-black text-white font-sans antialiased">
-
-        {/* ── Persistent ambient background ────────── */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-        >
-          {/* Static ambient radials — always visible, no JS required */}
-          <div
-            className="absolute -top-1/4 -left-1/4 w-[60vw] h-[60vw] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, #1e293b 0%, transparent 70%)',
-              filter: 'blur(60px)',
-              opacity: 0.35,
-            }}
-          />
-          <div
-            className="absolute -bottom-1/4 -right-1/4 w-[60vw] h-[60vw] rounded-full"
-            style={{
-              background: 'radial-gradient(circle, #0f172a 0%, transparent 70%)',
-              filter: 'blur(60px)',
-              opacity: 0.35,
-            }}
-          />
-          {/* Subtle grid texture */}
-          <div
-            className="absolute inset-0 opacity-[0.025]"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-              backgroundSize: '80px 80px',
-            }}
-          />
-        </div>
-
-        {/* ── Mouse-tracking spotlight (client-only, desktop only) ── */}
-        <ClientOnly>
-          <MouseFollower />
-        </ClientOnly>
-
-        {/* ── Persistent navigation ─────────────────── */}
-        <Navbar />
-
-        {/* ── Page content ──────────────────────────── */}
-        <main className="relative z-10">{children}</main>
+    <html
+      lang={locale}
+      dir={dir}
+      className={`${cairo.variable}`}
+      suppressHydrationWarning>
+      <body className="bg-[#0B0B0B] text-white font-sans antialiased">
+        {children}
       </body>
     </html>
-  )
+  );
 }
