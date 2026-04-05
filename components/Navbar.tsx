@@ -137,7 +137,7 @@ export default function Navbar() {
           <span className="text-xs tracking-widest uppercase text-white/30 hidden sm:block">
             Menu
           </span>
-          <Menu size={18} strokeWidth={1.5} />
+          <Menu size={18} />
         </button>
       </motion.header>
 
@@ -181,7 +181,7 @@ export default function Navbar() {
                 <span className="text-xs tracking-widest uppercase text-white/30 hidden sm:block">
                   Close
                 </span>
-                <X size={18} strokeWidth={1.5} />
+                <X size={18} />
               </button>
             </div>
 
@@ -251,7 +251,7 @@ export default function Navbar() {
                     transition={{ delay: 0.42 + i * 0.05 }}
                     className="text-white/25 hover:text-white transition-colors duration-200"
                     aria-label={label}>
-                    <Icon size={15} strokeWidth={1.5} />
+                    <Icon size={15} />
                   </motion.a>
                 ))}
 
