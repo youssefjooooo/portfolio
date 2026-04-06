@@ -12,6 +12,8 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useLocale } from 'next-intl'
+import { ArrowLeft } from 'lucide-react'
 
 export type ProjectCategory = 'frontend' | 'backend' | 'fullstack' | 'creative'
 
@@ -27,6 +29,8 @@ export interface ProjectData {
 
 export default function ProjectCard({ project }: { project: ProjectData }) {
   const [hovered, setHovered] = useState(false)
+  const locale = useLocale()
+  const isEnglish = locale === 'en'
 
   return (
     <motion.div
@@ -104,7 +108,11 @@ export default function ProjectCard({ project }: { project: ProjectData }) {
             className="inline-flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200"
             style={{ color: hovered ? 'rgba(255,255,255,0.60)' : 'rgba(255,255,255,0.20)' }}
           >
-            View project →
+            View project
+            <ArrowLeft
+              size={13}
+              className={isEnglish ? 'rotate-180' : ''}
+            />
           </Link>
         )}
 

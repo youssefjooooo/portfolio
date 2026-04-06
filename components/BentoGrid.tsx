@@ -5,11 +5,12 @@
  * Each <ProjectCard /> is a Client Component that hydrates hover / 3D.
  */
 
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import ProjectCard, { type ProjectData } from '@/components/ProjectCard'
 
 export default async function BentoGrid() {
   const t = await getTranslations('work')
+  const locale = await getLocale()
 
   const PROJECTS: ProjectData[] = [
     {
@@ -18,7 +19,7 @@ export default async function BentoGrid() {
       description: t('p1_desc'),
       tags:        t('p1_tags').split(','),
       category:    t('p1_cat') as ProjectData['category'],
-      href: '#',
+      href: `/${locale}/projects/1`,
       year: '2024',
     },
     {
@@ -27,7 +28,7 @@ export default async function BentoGrid() {
       description: t('p2_desc'),
       tags:        t('p2_tags').split(','),
       category:    t('p2_cat') as ProjectData['category'],
-      href: '#',
+      href: `/${locale}/projects/2`,
       year: '2024',
     },
     {
@@ -36,7 +37,7 @@ export default async function BentoGrid() {
       description: t('p3_desc'),
       tags:        t('p3_tags').split(','),
       category:    t('p3_cat') as ProjectData['category'],
-      href: '#',
+      href: `/${locale}/projects/3`,
       year: '2023',
     },
     {
@@ -45,7 +46,7 @@ export default async function BentoGrid() {
       description: t('p4_desc'),
       tags:        t('p4_tags').split(','),
       category:    t('p4_cat') as ProjectData['category'],
-      href: '#',
+      href: `/${locale}/projects/4`,
       year: '2023',
     },
     {
@@ -54,7 +55,7 @@ export default async function BentoGrid() {
       description: t('p5_desc'),
       tags:        t('p5_tags').split(','),
       category:    t('p5_cat') as ProjectData['category'],
-      href: '#',
+      href: `/${locale}/projects/5`,
       year: '2023',
     },
   ]

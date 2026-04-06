@@ -51,11 +51,11 @@ import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher";
 
-const LINKS = [
-  { key: "work", href: "#work", n: "01" },
-  { key: "stack", href: "#stack", n: "02" },
-  { key: "about", href: "#about", n: "03" },
-  { key: "contact", href: "#contact", n: "04" },
+const NAV_KEYS = [
+  { key: "work",    n: "01" },
+  { key: "stack",   n: "02" },
+  { key: "about",   n: "03" },
+  { key: "contact", n: "04" },
 ] as const;
 
 const itemV = {
@@ -187,10 +187,10 @@ export default function Navbar() {
 
             {/* Nav links */}
             <nav className="relative flex-1 flex flex-col justify-center px-8 md:px-14 lg:px-20 gap-1">
-              {LINKS.map(({ key, href, n }, i) => (
+              {NAV_KEYS.map(({ key, n }, i) => (
                 <motion.a
                   key={key}
-                  href={href}
+                  href={`/${locale}#${key}`}
                   custom={i}
                   variants={itemV}
                   initial="hidden"
