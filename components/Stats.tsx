@@ -1,77 +1,68 @@
 'use client'
 
 /**
- * Stats — Client Component
- *
- * Four animated stat cards. Numbers count-up from 0 when the section
- * enters the viewport (IntersectionObserver + rAF).
- * Triggers once only (once: true).
+ * Stats — Editorial data display.
+ * One large glass panel divided into 4 vertical slices.
+ * Numbers count up; subtle separators between cells.
  */
 
 import { useEffect, useRef, useState } from 'react'
-import { motion, useInView }           from 'framer-motion'
-import { useTranslations }             from 'next-intl'
+import { motion, useInView } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
-function useCountUp(target: number, duration = 1200, active: boolean) {
+function useCountUp(target: number, duration = 1400, active: boolean) {
   const [count, setCount] = useState(0)
 
   useEffect(() => {
     if (!active || target === 0) return
     const start = performance.now()
-    const raf = (now: number) => {
-      const elapsed = now - start
-      const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - t, 3)
       setCount(Math.round(eased * target))
-      if (progress < 1) requestAnimationFrame(raf)
+      if (t < 1) requestAnimationFrame(tick)
     }
-    requestAnimationFrame(raf)
+    requestAnimationFrame(tick)
   }, [active, target, duration])
 
   return count
 }
 
-const CARD_VARIANTS = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
-  visible: (i: number) => ({
-    opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: { duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] },
-  }),
-}
-
-interface StatCardProps {
+interface StatCellProps {
   value: string
   label: string
   index: number
   active: boolean
+  isLast: boolean
 }
 
-function StatCard({ value, label, index, active }: StatCardProps) {
+function StatCell({ value, label, index, active, isLast }: StatCellProps) {
   const numeric = parseInt(value.replace(/\D/g, ''), 10) || 0
   const suffix  = value.replace(/[0-9]/g, '')
   const count   = useCountUp(numeric, 1400, active)
-
-  const displayValue = active && numeric > 0 ? `${count}${suffix}` : value
+  const display = active && numeric > 0 ? `${count}${suffix}` : value
 
   return (
     <motion.div
-      custom={index}
-      variants={CARD_VARIANTS}
-      className="flex flex-col items-center gap-2 px-8 py-8 rounded-2xl glass-surface text-center group hover:glass-dense transition-all duration-300"
+      initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+      animate={active ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+      transition={{ duration: 0.7, delay: 0.1 + index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative flex flex-col items-center gap-2 py-10 px-4 text-center ${
+        !isLast ? 'md:border-r md:border-ink/8' : ''
+      }`}
     >
-      <span className="text-4xl md:text-5xl font-bold tracking-tighter tabular-nums text-white">
-        {displayValue}
+      <span className="text-5xl md:text-6xl font-bold tracking-tighter tabular-nums text-ink-strong leading-none">
+        {display}
       </span>
-      <span className="text-sm text-white/35 font-medium leading-tight">{label}</span>
-      <div className="w-8 h-px rounded-full mt-1 bg-white/15 group-hover:bg-white/30 transition-colors duration-300" />
+      <span className="serif-italic text-sm text-ink-mid mt-1">{label}</span>
     </motion.div>
   )
 }
 
 export default function Stats() {
-  const t       = useTranslations('stats')
-  const ref     = useRef<HTMLDivElement>(null)
-  const inView  = useInView(ref, { once: true, margin: '-80px' })
+  const t     = useTranslations('stats')
+  const ref   = useRef<HTMLDivElement>(null)
+  const inView= useInView(ref, { once: true, margin: '-80px' })
 
   const items = [
     { value: t('v1'), label: t('l1') },
@@ -81,14 +72,16 @@ export default function Stats() {
   ]
 
   return (
-    <section ref={ref} className="relative z-10 px-4 md:px-8 lg:px-16 py-16 max-w-7xl mx-auto">
+    <section className="relative z-10 px-4 md:px-8 lg:px-16 py-16 max-w-6xl mx-auto">
       <motion.div
-        initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+        ref={ref}
+        initial={{ opacity: 0, y: 24 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-surface rounded-3xl grid grid-cols-2 md:grid-cols-4 overflow-hidden"
       >
         {items.map((item, i) => (
-          <StatCard key={i} value={item.value} label={item.label} index={i} active={inView} />
+          <StatCell key={i} value={item.value} label={item.label} index={i} active={inView} isLast={i === items.length - 1} />
         ))}
       </motion.div>
     </section>

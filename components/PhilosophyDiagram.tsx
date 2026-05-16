@@ -1,16 +1,21 @@
 "use client";
 
 /**
- * PhilosophyDiagram — Client Component (Dark Monochromatic)
- *
- * Animated SVG system-architecture diagram.
- * 5 nodes (Core + 4 satellites) in a radial layout connected by
- * animated dashed paths. pathLength animates 0→1 on scroll entry.
+ * PhilosophyDiagram — Animated radial architecture diagram.
+ * Light Apple-Glass palette + Lucide icons in each node.
  */
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useTranslations } from "next-intl";
+import {
+  Hexagon,
+  LayoutDashboard,
+  Server,
+  Database,
+  Cloud,
+  type LucideIcon,
+} from "lucide-react";
 
 interface Node {
   id: string;
@@ -18,7 +23,7 @@ interface Node {
   cy: number;
   r: number;
   labelKey: string;
-  icon: string;
+  Icon: LucideIcon;
 }
 
 interface Edge {
@@ -29,29 +34,15 @@ interface Edge {
 }
 
 const NODES: Node[] = [
-  { id: "core", cx: 200, cy: 180, r: 44, labelKey: "node_core", icon: "⬡" },
-  {
-    id: "frontend",
-    cx: 200,
-    cy: 52,
-    r: 30,
-    labelKey: "node_frontend",
-    icon: "◈",
-  },
-  {
-    id: "backend",
-    cx: 330,
-    cy: 180,
-    r: 30,
-    labelKey: "node_backend",
-    icon: "◎",
-  },
-  { id: "data", cx: 70, cy: 180, r: 30, labelKey: "node_data", icon: "◇" },
-  { id: "infra", cx: 200, cy: 310, r: 30, labelKey: "node_infra", icon: "▦" },
+  { id: "core",     cx: 200, cy: 180, r: 44, labelKey: "node_core",     Icon: Hexagon         },
+  { id: "frontend", cx: 200, cy: 52,  r: 30, labelKey: "node_frontend", Icon: LayoutDashboard },
+  { id: "backend",  cx: 330, cy: 180, r: 30, labelKey: "node_backend",  Icon: Server          },
+  { id: "data",     cx: 70,  cy: 180, r: 30, labelKey: "node_data",     Icon: Database        },
+  { id: "infra",    cx: 200, cy: 310, r: 30, labelKey: "node_infra",    Icon: Cloud           },
 ];
 
 const EDGES: Edge[] = [
-  { x1: 200, y1: 136, x2: 200, y2: 82 },
+  { x1: 200, y1: 136, x2: 200, y2: 82  },
   { x1: 244, y1: 180, x2: 300, y2: 180 },
   { x1: 100, y1: 180, x2: 156, y2: 180 },
   { x1: 200, y1: 224, x2: 200, y2: 280 },
@@ -63,18 +54,23 @@ export default function PhilosophyDiagram() {
   const active = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <div ref={ref} className="flex items-center justify-center py-6">
+    <div ref={ref} className="flex items-center justify-center py-6 relative z-10">
       <svg
         viewBox="0 -20 400 390"
         className="w-full max-w-[340px]"
         aria-hidden="true">
         <defs>
-          <radialGradient id="core-grad-dark" cx="50%" cy="35%" r="65%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.30)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0.10)" />
+          <radialGradient id="core-grad-light" cx="50%" cy="35%" r="65%">
+            <stop offset="0%" stopColor="rgba(78,123,255,0.45)" />
+            <stop offset="60%" stopColor="rgba(139,107,255,0.25)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.75)" />
           </radialGradient>
-          <filter id="glow-dark">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+          <radialGradient id="node-grad-light" cx="50%" cy="35%" r="70%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.95)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.55)" />
+          </radialGradient>
+          <filter id="glow-blue">
+            <feGaussianBlur stdDeviation="5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -86,38 +82,24 @@ export default function PhilosophyDiagram() {
         {EDGES.map((e, i) => (
           <g key={i}>
             <line
-              x1={e.x1}
-              y1={e.y1}
-              x2={e.x2}
-              y2={e.y2}
-              stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1.5"
+              x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+              stroke="rgba(11,16,32,0.10)" strokeWidth="1.5"
             />
             <motion.line
-              x1={e.x1}
-              y1={e.y1}
-              x2={e.x2}
-              y2={e.y2}
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth="1.5"
+              x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
+              stroke="rgba(78,123,255,0.55)" strokeWidth="1.5"
               strokeDasharray="5 4"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={active ? { pathLength: 1, opacity: 1 } : {}}
-              transition={{
-                duration: 0.8,
-                delay: 0.3 + i * 0.15,
-                ease: "easeOut",
-              }}
+              transition={{ duration: 0.8, delay: 0.3 + i * 0.15, ease: "easeOut" }}
             />
             {active && (
               <motion.circle
-                r={3}
-                fill="rgba(255,255,255,0.7)"
-                opacity={0.8}
-                initial={{ "--offset-distance": "0%", opacity: 0.8 } as any}
-                animate={
-                  { "--offset-distance": "100%", opacity: [0.8, 0.8, 0] } as any
-                }
+                r={3.5}
+                fill="rgba(78,123,255,0.9)"
+                opacity={0.9}
+                initial={{ "--offset-distance": "0%", opacity: 0.9 } as never}
+                animate={{ "--offset-distance": "100%", opacity: [0.9, 0.9, 0] } as never}
                 transition={{
                   duration: 1.6,
                   delay: 0.8 + i * 0.4,
@@ -125,102 +107,98 @@ export default function PhilosophyDiagram() {
                   repeatDelay: 2,
                   ease: "easeInOut",
                 }}
-                style={
-                  {
-                    offsetPath: `path("M ${e.x1} ${e.y1} L ${e.x2} ${e.y2}")`,
-                    offsetDistance: "var(--offset-distance)",
-                  } as React.CSSProperties
-                }
+                style={{
+                  offsetPath: `path("M ${e.x1} ${e.y1} L ${e.x2} ${e.y2}")`,
+                  offsetDistance: "var(--offset-distance)",
+                  filter: "url(#glow-blue)",
+                } as React.CSSProperties}
               />
             )}
           </g>
         ))}
 
         {/* ── Nodes ───────────────────────────────────── */}
-        {NODES.map((n, i) => (
-          <g key={n.id}>
-            {active && (
+        {NODES.map((n, i) => {
+          const iconSize = n.id === "core" ? 28 : 20;
+          return (
+            <g key={n.id}>
+              {active && (
+                <motion.circle
+                  cx={n.cx} cy={n.cy} r={n.r}
+                  fill="none"
+                  stroke={n.id === "core" ? "rgba(78,123,255,0.45)" : "rgba(11,16,32,0.18)"}
+                  strokeWidth="1.5"
+                  initial={{ scale: 1, opacity: 0.6 }}
+                  animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
+                  transition={{
+                    duration: 3,
+                    delay: i * 0.5,
+                    repeat: Infinity,
+                    ease: "easeOut",
+                  }}
+                  style={{ transformOrigin: `${n.cx}px ${n.cy}px` }}
+                />
+              )}
+
               <motion.circle
-                className={`flex items-center justify-center`}
-                cx={n.cx}
-                cy={n.cy}
-                r={n.r}
-                fill="none"
-                stroke="rgba(255,255,255,0.20)"
-                strokeWidth="1.5"
-                initial={{ scale: 1, opacity: 0.4 }}
-                animate={{ scale: [1, 1.7, 1], opacity: [0.4, 0, 0.4] }}
+                cx={n.cx} cy={n.cy} r={n.r}
+                fill={n.id === "core" ? "url(#core-grad-light)" : "url(#node-grad-light)"}
+                stroke={n.id === "core" ? "rgba(78,123,255,0.45)" : "rgba(11,16,32,0.14)"}
+                strokeWidth={1.5}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={active ? { scale: 1, opacity: 1 } : {}}
                 transition={{
-                  duration: 3,
-                  delay: i * 0.5,
-                  repeat: Infinity,
-                  ease: "easeOut",
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 22,
+                  delay: 0.1 + i * 0.1,
                 }}
-                style={{ transformOrigin: `${n.cx}px ${n.cy}px` }}
+                style={{
+                  transformOrigin: `${n.cx}px ${n.cy}px`,
+                  filter: n.id === "core" ? "url(#glow-blue)" : "none",
+                }}
               />
-            )}
 
-            <motion.circle
-              className={`flex items-center justify-center`}
-              cx={n.cx}
-              cy={n.cy}
-              r={n.r}
-              fill={
-                n.id === "core"
-                  ? "url(#core-grad-dark)"
-                  : "rgba(255,255,255,0.05)"
-              }
-              stroke="rgba(255,255,255,0.15)"
-              strokeWidth={1.5}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={active ? { scale: 1, opacity: 1 } : {}}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 22,
-                delay: 0.1 + i * 0.1,
-              }}
-              style={{
-                transformOrigin: `${n.cx}px ${n.cy}px`,
-                filter: n.id === "core" ? "url(#glow-dark)" : "none",
-              }}
-            />
+              <motion.foreignObject
+                x={n.cx - iconSize / 2}
+                y={n.cy - iconSize / 2}
+                width={iconSize}
+                height={iconSize}
+                initial={{ opacity: 0 }}
+                animate={active ? { opacity: 1 } : {}}
+                transition={{ delay: 0.4 + i * 0.1 }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: n.id === "core" ? "rgba(11,16,32,0.95)" : "rgba(11,16,32,0.6)",
+                  }}
+                >
+                  <n.Icon size={iconSize} strokeWidth={1.7} />
+                </div>
+              </motion.foreignObject>
 
-            <motion.text
-              className={`text-3xl flex items-center justify-center`}
-              x={n.cx}
-              y={n.cy + (n.id === "core" ? 6 : 10)}
-              textAnchor="middle"
-              fontSize={n.id === "core" ? 18 : 14}
-              fill={
-                n.id === "core"
-                  ? "rgba(255,255,255,0.9)"
-                  : "rgba(255,255,255,0.45)"
-              }
-              initial={{ opacity: 0 }}
-              animate={active ? { opacity: 1 } : {}}
-              transition={{ delay: 0.4 + i * 0.1 }}
-              style={{ userSelect: "none" }}>
-              {n.icon}
-            </motion.text>
-
-            <motion.text
-              className={` mt-2 text-sm flex items-center justify-center`}
-              x={n.cx}
-              y={n.cy + n.r + 25}
-              textAnchor="middle"
-              fontSize={10}
-              fontWeight="600"
-              fill="rgba(255,255,255,0.25)"
-              letterSpacing="0.08em"
-              initial={{ opacity: 0, y: 20 }}
-              animate={active ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.5 + i * 0.1 }}
-              style={{ textTransform: "uppercase", userSelect: "none" }}>
-              {t(n.labelKey as Parameters<typeof t>[0])}
-            </motion.text>
-          </g>
-        ))}
+              <motion.text
+                x={n.cx}
+                y={n.cy + n.r + 22}
+                textAnchor="middle"
+                fontSize={10}
+                fontWeight="700"
+                fill="rgba(11,16,32,0.45)"
+                letterSpacing="0.12em"
+                initial={{ opacity: 0, y: 20 }}
+                animate={active ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.5 + i * 0.1 }}
+                style={{ textTransform: "uppercase", userSelect: "none" }}>
+                {t(n.labelKey as Parameters<typeof t>[0])}
+              </motion.text>
+            </g>
+          );
+        })}
       </svg>
     </div>
   );

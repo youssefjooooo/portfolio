@@ -1,15 +1,15 @@
 'use client'
 
 /**
- * GlassButton — Monochromatic dark mode.
+ * GlassButton — Apple Liquid Glass.
  *
- * primary → white fill, black text — maximum contrast.
- * glass   → subtle white glass panel.
- * ghost   → transparent with white border.
+ * primary → solid ink with white text + specular shimmer + soft accent glow.
+ * glass   → translucent white glass pill.
+ * ghost   → thin outlined glass.
  */
 
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode, type MouseEvent } from 'react'
 
 interface Props {
   children: ReactNode
@@ -23,38 +23,57 @@ interface Props {
 export default function GlassButton({
   children, href, onClick, variant = 'primary', className = '', external = false,
 }: Props) {
+  const ref = useRef<HTMLButtonElement | HTMLAnchorElement | null>(null)
+
+  // Subtle magnetic hover effect
+  const onMove = (e: MouseEvent<HTMLElement>) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    el.style.transform = `translate(${x * 0.12}px, ${y * 0.18}px)`
+  }
+  const onLeave = () => {
+    const el = ref.current
+    if (!el) return
+    el.style.transform = ''
+  }
+
   const base = [
     'relative inline-flex items-center justify-center gap-2',
-    'px-6 py-3 rounded-xl text-sm font-semibold tracking-wide',
-    'overflow-hidden select-none cursor-pointer',
-    'transition-all duration-300 ease-out',
-    'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40',
+    'px-6 py-3 rounded-full text-sm font-semibold tracking-wide',
+    'overflow-hidden select-none cursor-pointer will-change-transform',
+    'transition-[background,color,box-shadow,border-color] duration-300 ease-out',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50',
   ].join(' ')
 
   const variants = {
     primary: [
-      'bg-white text-black',
-      'hover:bg-white/90 hover:shadow-[0_0_40px_rgba(255,255,255,0.18)]',
-      'active:scale-[0.98]',
+      'bg-ink text-white',
+      'shadow-[0_10px_28px_-8px_rgba(11,16,32,0.5)]',
+      'hover:shadow-[0_14px_36px_-8px_rgba(78,123,255,0.55)]',
+      'hover:bg-[#1A2138]',
+      'active:scale-[0.97]',
     ].join(' '),
     glass: [
-      'glass-surface text-white/70',
-      'hover:glass-dense hover:text-white',
+      'glass-pill text-ink-strong',
+      'hover:bg-white/85',
     ].join(' '),
     ghost: [
-      'bg-transparent border border-white/20 text-white/55',
-      'hover:text-white hover:border-white/40',
+      'bg-white/30 backdrop-blur-glass border border-white/65 text-ink-mid',
+      'hover:bg-white/55 hover:text-ink-strong hover:border-white/90',
+      'shadow-[0_1px_0_0_rgba(255,255,255,0.8)_inset,0_6px_18px_-6px_rgba(8,22,58,0.14)]',
     ].join(' '),
   }
 
-  // Shimmer: faint diagonal sweep — works on both white and dark fills
   const shimmer = variant === 'primary' ? (
     <span
       aria-hidden="true"
-      className="absolute inset-0 -skew-x-[20deg] animate-shimmer pointer-events-none"
+      className="absolute inset-0 -skew-x-[18deg] animate-shimmer pointer-events-none"
       style={{
-        background: 'linear-gradient(90deg,transparent 0%,rgba(0,0,0,0.06) 50%,transparent 100%)',
-        width: '40%',
+        background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%)',
+        width: '50%',
       }}
     />
   ) : null
@@ -69,7 +88,10 @@ export default function GlassButton({
   if (href) {
     return (
       <Link
+        ref={ref as React.RefObject<HTMLAnchorElement>}
         href={href}
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
         className={`${base} ${variants[variant]} ${className}`}
         {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       >
@@ -78,7 +100,14 @@ export default function GlassButton({
     )
   }
   return (
-    <button type="button" onClick={onClick} className={`${base} ${variants[variant]} ${className}`}>
+    <button
+      ref={ref as React.RefObject<HTMLButtonElement>}
+      type="button"
+      onClick={onClick}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={`${base} ${variants[variant]} ${className}`}
+    >
       {inner}
     </button>
   )

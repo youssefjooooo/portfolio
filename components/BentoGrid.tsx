@@ -1,8 +1,8 @@
 /**
- * BentoGrid — Server Component
+ * BentoGrid — Editorial work showcase.
  *
- * Static project data with getTranslations for localised content.
- * Each <ProjectCard /> is a Client Component that hydrates hover / 3D.
+ * Layout: one featured project (full width, larger height),
+ * then a 2-up row, then a 2-up row. Less is more.
  */
 
 import { getTranslations, getLocale } from 'next-intl/server'
@@ -13,81 +13,32 @@ export default async function BentoGrid() {
   const locale = await getLocale()
 
   const PROJECTS: ProjectData[] = [
-    {
-      id: '1',
-      title:       t('p1_title'),
-      description: t('p1_desc'),
-      tags:        t('p1_tags').split(','),
-      category:    t('p1_cat') as ProjectData['category'],
-      href: `/${locale}/projects/1`,
-      year: '2024',
-    },
-    {
-      id: '2',
-      title:       t('p2_title'),
-      description: t('p2_desc'),
-      tags:        t('p2_tags').split(','),
-      category:    t('p2_cat') as ProjectData['category'],
-      href: `/${locale}/projects/2`,
-      year: '2024',
-    },
-    {
-      id: '3',
-      title:       t('p3_title'),
-      description: t('p3_desc'),
-      tags:        t('p3_tags').split(','),
-      category:    t('p3_cat') as ProjectData['category'],
-      href: `/${locale}/projects/3`,
-      year: '2023',
-    },
-    {
-      id: '4',
-      title:       t('p4_title'),
-      description: t('p4_desc'),
-      tags:        t('p4_tags').split(','),
-      category:    t('p4_cat') as ProjectData['category'],
-      href: `/${locale}/projects/4`,
-      year: '2023',
-    },
-    {
-      id: '5',
-      title:       t('p5_title'),
-      description: t('p5_desc'),
-      tags:        t('p5_tags').split(','),
-      category:    t('p5_cat') as ProjectData['category'],
-      href: `/${locale}/projects/5`,
-      year: '2023',
-    },
+    { id: '1', title: t('p1_title'), description: t('p1_desc'), tags: t('p1_tags').split(','), category: t('p1_cat') as ProjectData['category'], href: `/${locale}/projects/1`, year: '2024' },
+    { id: '2', title: t('p2_title'), description: t('p2_desc'), tags: t('p2_tags').split(','), category: t('p2_cat') as ProjectData['category'], href: `/${locale}/projects/2`, year: '2024' },
+    { id: '3', title: t('p3_title'), description: t('p3_desc'), tags: t('p3_tags').split(','), category: t('p3_cat') as ProjectData['category'], href: `/${locale}/projects/3`, year: '2023' },
+    { id: '4', title: t('p4_title'), description: t('p4_desc'), tags: t('p4_tags').split(','), category: t('p4_cat') as ProjectData['category'], href: `/${locale}/projects/4`, year: '2023' },
+    { id: '5', title: t('p5_title'), description: t('p5_desc'), tags: t('p5_tags').split(','), category: t('p5_cat') as ProjectData['category'], href: `/${locale}/projects/5`, year: '2023' },
   ]
 
   return (
-    <section id="work" className="relative z-10 px-4 md:px-8 lg:px-16 py-24 max-w-7xl mx-auto">
-
-      {/* Header */}
-      <div className="mb-14">
-        <p className="eyebrow mb-3">{t('tag')}</p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white/80 tracking-tight leading-tight">
-          {t('headline_1')}{' '}
-          <span className="text-gradient">{t('headline_2')}</span>
+    <section id="work" className="relative z-10 px-4 md:px-8 lg:px-16 py-32 max-w-7xl mx-auto">
+      {/* Editorial header */}
+      <div className="mb-16 max-w-4xl">
+        <p className="eyebrow mb-4">{t('tag')}</p>
+        <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.92]">
+          <span className="text-ink-strong">{t('headline_1')}</span>{' '}
+          <span className="serif-italic text-gradient">{t('headline_2')}</span>
         </h2>
       </div>
 
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:auto-rows-fr">
-        <div className="min-h-[290px] lg:col-span-2">
-          <ProjectCard project={PROJECTS[0]} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+        <div className="md:col-span-2">
+          <ProjectCard project={PROJECTS[0]} variant="featured" index={0} />
         </div>
-        <div className="min-h-[290px]">
-          <ProjectCard project={PROJECTS[1]} />
-        </div>
-        <div className="min-h-[250px]">
-          <ProjectCard project={PROJECTS[2]} />
-        </div>
-        <div className="min-h-[250px]">
-          <ProjectCard project={PROJECTS[3]} />
-        </div>
-        <div className="min-h-[250px]">
-          <ProjectCard project={PROJECTS[4]} />
-        </div>
+        <ProjectCard project={PROJECTS[1]} variant="standard" index={1} />
+        <ProjectCard project={PROJECTS[2]} variant="standard" index={2} />
+        <ProjectCard project={PROJECTS[3]} variant="standard" index={3} />
+        <ProjectCard project={PROJECTS[4]} variant="standard" index={4} />
       </div>
     </section>
   )

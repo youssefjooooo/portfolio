@@ -10,8 +10,8 @@ export default function RandomFooterMessage({ messages }: { messages: string[] }
   }, [messages])
 
   return (
-    <p 
-      className={`text-xs text-white/20 transition-opacity duration-700 ${msg ? 'opacity-100' : 'opacity-0'}`}
+    <p
+      className={`text-xs text-ink-muted transition-opacity duration-700 ${msg ? 'opacity-100' : 'opacity-0'}`}
     >
       {msg || messages[0]}
     </p>

@@ -1,63 +1,31 @@
 "use client";
 
 /**
- * BuildingNow — Client Component (Dark Monochromatic)
- *
- * "What I'm Building Now" — two glass cards side by side.
- * Left (Agency): Static content with LIVE badge + bullet list.
- * Right (R&D): Animated terminal window typewriter effect.
+ * BuildingNow — Editorial two-card lab (Apple Liquid Glass).
+ * Left: agency, with progress + bullets.
+ * Right: R&D, with light terminal.
  */
 
 import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { Hexagon, Activity } from "lucide-react";
 
 const TERMINAL_LINES = [
-  { text: "$ encore run", color: "rgba(255,255,255,0.35)", delay: 0 },
-  {
-    text: "  Starting services...",
-    color: "rgba(255,255,255,0.20)",
-    delay: 600,
-  },
-  {
-    text: "  ✓ auth-svc   ready :4000",
-    color: "rgba(255,255,255,0.55)",
-    delay: 1200,
-  },
-  {
-    text: "  ✓ api-svc    ready :4001",
-    color: "rgba(255,255,255,0.55)",
-    delay: 1700,
-  },
-  {
-    text: "  ✓ frontend   ready :3000",
-    color: "rgba(255,255,255,0.55)",
-    delay: 2200,
-  },
-  {
-    text: "  Service mesh initialized",
-    color: "rgba(255,255,255,0.25)",
-    delay: 2800,
-  },
-  { text: "  🚀 Ready in 1.18s", color: "rgba(255,255,255,0.70)", delay: 3200 },
+  { text: "$ encore run",                 color: "rgba(10,14,31,0.85)",   delay: 0    },
+  { text: "  Starting services...",       color: "rgba(10,14,31,0.45)",   delay: 600  },
+  { text: "  ✓ auth-svc   ready :4000",   color: "rgba(46,140,90,0.85)",  delay: 1200 },
+  { text: "  ✓ api-svc    ready :4001",   color: "rgba(46,140,90,0.85)",  delay: 1700 },
+  { text: "  ✓ frontend   ready :3000",   color: "rgba(46,140,90,0.85)",  delay: 2200 },
+  { text: "  Service mesh initialized",   color: "rgba(10,14,31,0.55)",   delay: 2800 },
+  { text: "  🚀 Ready in 1.18s",          color: "rgba(91,126,255,0.95)", delay: 3200 },
 ];
 
-function TerminalLine({
-  text,
-  color,
-  active,
-}: {
-  text: string;
-  color: string;
-  active: boolean;
-}) {
+function TerminalLine({ text, color, active }: { text: string; color: string; active: boolean }) {
   const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
-    if (!active) {
-      setDisplayed("");
-      return;
-    }
+    if (!active) { setDisplayed(""); return; }
     let i = 0;
     const interval = setInterval(() => {
       setDisplayed(text.slice(0, i + 1));
@@ -94,31 +62,27 @@ function Terminal() {
     <div
       dir="ltr"
       ref={ref}
-      className="rounded-2xl overflow-hidden"
-      style={{ boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}>
-      {/* Traffic lights bar */}
-      <div className="flex w-full items-center gap-1.5 px-4 py-3 bg-[rgba(255,255,255,0.04)] border-b border-white/[0.06]">
-        <span className="w-3 h-3 rounded-full bg-white/20" />
-        <span className="w-3 h-3 rounded-full bg-white/20" />
-        <span className="w-3 h-3 rounded-full bg-white/20" />
-        <span className="ml-3 text-[11px] text-white/25 font-mono justify-self-start">
+      className="rounded-2xl overflow-hidden glass-light"
+      style={{
+        background: 'rgba(255,255,255,0.55)',
+        boxShadow: '0 8px 28px -8px rgba(10,14,31,0.18), 0 1px 0 rgba(255,255,255,0.9) inset',
+      }}>
+      <div className="flex w-full items-center gap-1.5 px-4 py-3 border-b border-ink/8" style={{ background: 'rgba(255,255,255,0.4)' }}>
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FF5F57' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#FEBC2E' }} />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#28C840' }} />
+        <span className="ml-3 text-[11px] text-ink-muted font-mono">
           {t("rd_tag")} · Encore.ts
         </span>
       </div>
-      {/* Terminal body */}
-      <div className="bg-[rgba(0,0,0,0.60)] px-5 py-5 space-y-1 min-h-[200px]">
+      <div className="px-5 py-5 space-y-1 min-h-[200px]" style={{ background: 'rgba(250,250,247,0.65)' }}>
         {TERMINAL_LINES.map((line, i) => (
-          <TerminalLine
-            key={i}
-            text={line.text}
-            color={line.color}
-            active={activeIndex >= i}
-          />
+          <TerminalLine key={i} text={line.text} color={line.color} active={activeIndex >= i} />
         ))}
         {activeIndex >= TERMINAL_LINES.length - 1 && (
-          <div className="font-mono text-[13px] text-white/20 mt-2">
+          <div className="font-mono text-[13px] text-ink-mid mt-2">
             {"$ "}
-            <span className="inline-block w-1.5 h-3.5 bg-white/30 animate-blink align-middle ml-px" />
+            <span className="inline-block w-1.5 h-3.5 bg-ink/55 animate-blink align-middle ml-px" />
           </div>
         )}
       </div>
@@ -127,9 +91,9 @@ function Terminal() {
 }
 
 const AGENCY_BULLETS = [
-  { icon: "⬡", text: "Design + Engineering + SEO" },
-  { icon: "◎", text: "High-quality web products" },
-  { icon: "◈", text: "End-to-end delivery" },
+  "Design + Engineering + SEO",
+  "High-quality web products",
+  "End-to-end delivery",
 ];
 
 export default function BuildingNow() {
@@ -137,24 +101,21 @@ export default function BuildingNow() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 32, filter: "blur(8px)" },
+  const cardV = {
+    hidden: { opacity: 0, y: 36, filter: "blur(10px)", scale: 0.97 },
     visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.75, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] },
+      opacity: 1, y: 0, filter: "blur(0px)", scale: 1,
+      transition: { duration: 0.8, delay: i * 0.16, ease: [0.16, 1, 0.3, 1] },
     }),
   };
 
   return (
-    <section id="building" className="relative z-10 py-24">
+    <section id="building" className="relative z-10 py-32">
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
-        {/* Header */}
-        <div className="mb-12">
-          <p className="eyebrow mb-3">{t("tag")}</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white/80 tracking-tight">
-            {t("headline")}
+        <div className="mb-14 max-w-3xl">
+          <p className="eyebrow mb-4">{t("tag")}</p>
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.92]">
+            <span className="serif-italic text-gradient">{t("headline")}</span>
           </h2>
         </div>
 
@@ -162,75 +123,88 @@ export default function BuildingNow() {
           ref={ref}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* ── Agency card ─────────────────────────── */}
-          <motion.div custom={0} variants={cardVariants} className="h-full">
-            <div className="h-full p-8 rounded-3xl glass-surface flex flex-col gap-6 group hover:glass-dense transition-all duration-300">
+          className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+          {/* Agency */}
+          <motion.div custom={0} variants={cardV} className="h-full">
+            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-6 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className="flex items-center gap-2 mb-2">
+                  <div className="flex items-center gap-2 mb-3">
                     <span className="eyebrow">{t("agency_tag")}</span>
-                    <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-white/[0.06] text-white/50 border border-white/10">
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/60 animate-pulse" />
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold tracking-widest glass-light text-ink-strong">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inset-0 rounded-full bg-accent animate-pulse-soft" />
+                        <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
+                      </span>
                       {t("live")}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-white/80 leading-tight">
-                    {t("agency_title")}
+                  <h3 className="text-2xl md:text-3xl font-bold text-ink-strong leading-tight tracking-tighter">
+                    {t("agency_title").split(' ').slice(0, -1).join(' ')}{' '}
+                    <span className="serif-italic font-normal text-gradient">
+                      {t("agency_title").split(' ').slice(-1)}
+                    </span>
                   </h3>
                 </div>
-                <div className="w-12 h-12 rounded-2xl glass-surface flex-shrink-0 flex items-center justify-center text-white/50 text-xl">
-                  ⬡
-                </div>
+                <span className="w-11 h-11 rounded-2xl glass-light flex-shrink-0 flex items-center justify-center text-ink-strong">
+                  <Hexagon size={18} strokeWidth={1.8} />
+                </span>
               </div>
 
-              <p className="text-white/35 leading-relaxed text-sm flex-1">
+              <p className="text-ink-mid leading-relaxed text-[15px]">
                 {t("agency_body")}
               </p>
 
-              <div className="space-y-2.5">
-                {AGENCY_BULLETS.map(({ icon, text }) => (
-                  <div key={text} className="flex items-center gap-3">
-                    <span className="text-white/30 text-sm">{icon}</span>
-                    <span className="text-sm text-white/45">{text}</span>
-                  </div>
+              <ul className="space-y-2">
+                {AGENCY_BULLETS.map((text) => (
+                  <li key={text} className="flex items-center gap-3 text-sm text-ink-mid">
+                    <span className="serif-italic text-ink-muted">—</span>
+                    {text}
+                  </li>
                 ))}
-              </div>
+              </ul>
 
-              {/* Progress bar */}
-              <div>
-                <div className="flex justify-between text-[11px] text-white/25 mb-1.5">
+              <div className="mt-auto pt-2">
+                <div className="flex justify-between text-[11px] text-ink-muted font-semibold mb-2 tracking-wider uppercase">
                   <span>Scaling</span>
-                  <span>78%</span>
+                  <span className="tabular-nums">78%</span>
                 </div>
-                <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(10,14,31,0.08)' }}>
                   <motion.div
-                    className="h-full rounded-full bg-white/25"
+                    className="h-full rounded-full"
+                    style={{
+                      background: 'linear-gradient(90deg, #5B7EFF 0%, #A07BFF 100%)',
+                      boxShadow: '0 0 12px rgba(91,126,255,0.5)',
+                    }}
                     initial={{ width: 0 }}
                     animate={inView ? { width: "78%" } : {}}
-                    transition={{ duration: 1.2, delay: 0.4, ease: "easeOut" }}
+                    transition={{ duration: 1.3, delay: 0.5, ease: "easeOut" }}
                   />
                 </div>
               </div>
             </div>
           </motion.div>
 
-          {/* ── R&D card ────────────────────────────── */}
-          <motion.div custom={1} variants={cardVariants} className="h-full">
-            <div className="h-full p-8 rounded-3xl glass-surface flex flex-col gap-5 hover:glass-dense transition-all duration-300">
+          {/* R&D */}
+          <motion.div custom={1} variants={cardV} className="h-full">
+            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-5 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="eyebrow block mb-2">{t("rd_tag")}</span>
-                  <h3 className="text-xl font-bold text-white/80 leading-tight">
-                    {t("rd_title")}
+                  <span className="eyebrow block mb-3">{t("rd_tag")}</span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-ink-strong leading-tight tracking-tighter">
+                    {t("rd_title").split(' ').slice(0, -1).join(' ')}{' '}
+                    <span className="serif-italic font-normal text-gradient">
+                      {t("rd_title").split(' ').slice(-1)}
+                    </span>
                   </h3>
                 </div>
-                <div className="w-12 h-12 rounded-2xl glass-surface flex-shrink-0 flex items-center justify-center text-white/50 text-xl">
-                  ◎
-                </div>
+                <span className="w-11 h-11 rounded-2xl glass-light flex-shrink-0 flex items-center justify-center text-ink-strong">
+                  <Activity size={18} strokeWidth={1.8} />
+                </span>
               </div>
 
-              <p className="text-white/35 leading-relaxed text-sm">
+              <p className="text-ink-mid leading-relaxed text-[15px]">
                 {t("rd_body")}
               </p>
 

@@ -1,11 +1,13 @@
 /**
  * Root Layout — sets <html lang dir> and loads fonts.
- * Fonts: Comfortaa (English) + Cairo (Arabic).
- * Both are loaded as CSS variables so CSS and Tailwind can reference them.
+ *
+ * Fonts:
+ *  · Cairo — bilingual sans-serif (EN + AR) for UI/body
+ *  · Instrument Serif — editorial display font, used sparingly for impact
  */
 
 import type { Metadata, Viewport } from "next";
-import { Cairo } from "next/font/google";
+import { Cairo, Instrument_Serif } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import "./globals.css";
 
@@ -13,6 +15,14 @@ const cairo = Cairo({
   subsets: ["arabic", "latin"],
   variable: "--font-cairo",
   weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["400"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -36,8 +46,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0B0B0B",
-  colorScheme: "dark",
+  themeColor: "#FAFAF7",
+  colorScheme: "light",
 };
 
 export default async function RootLayout({
@@ -52,9 +62,9 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${cairo.variable}`}
+      className={`${cairo.variable} ${instrumentSerif.variable}`}
       suppressHydrationWarning>
-      <body className="bg-[#0B0B0B] text-white font-sans antialiased">
+      <body className="text-ink font-sans antialiased">
         {children}
       </body>
     </html>
