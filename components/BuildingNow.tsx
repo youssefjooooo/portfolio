@@ -12,12 +12,12 @@ import { useTranslations } from "next-intl";
 import { Hexagon, Activity } from "lucide-react";
 
 const TERMINAL_LINES = [
-  { text: "$ encore run",                 color: "rgba(10,14,31,0.85)",   delay: 0    },
-  { text: "  Starting services...",       color: "rgba(10,14,31,0.45)",   delay: 600  },
+  { text: "$ encore run",                 color: "rgb(var(--ink) / 0.85)", delay: 0    },
+  { text: "  Starting services...",       color: "rgb(var(--ink) / 0.45)", delay: 600  },
   { text: "  ✓ auth-svc   ready :4000",   color: "rgba(46,140,90,0.85)",  delay: 1200 },
   { text: "  ✓ api-svc    ready :4001",   color: "rgba(46,140,90,0.85)",  delay: 1700 },
   { text: "  ✓ frontend   ready :3000",   color: "rgba(46,140,90,0.85)",  delay: 2200 },
-  { text: "  Service mesh initialized",   color: "rgba(10,14,31,0.55)",   delay: 2800 },
+  { text: "  Service mesh initialized",   color: "rgb(var(--ink) / 0.55)", delay: 2800 },
   { text: "  🚀 Ready in 1.18s",          color: "rgba(91,126,255,0.95)", delay: 3200 },
 ];
 
@@ -62,12 +62,8 @@ function Terminal() {
     <div
       dir="ltr"
       ref={ref}
-      className="rounded-2xl overflow-hidden glass-light"
-      style={{
-        background: 'rgba(255,255,255,0.55)',
-        boxShadow: '0 8px 28px -8px rgba(10,14,31,0.18), 0 1px 0 rgba(255,255,255,0.9) inset',
-      }}>
-      <div className="flex w-full items-center gap-1.5 px-4 py-3 border-b border-ink/8" style={{ background: 'rgba(255,255,255,0.4)' }}>
+      className="rounded-2xl overflow-hidden glass-light">
+      <div className="flex w-full items-center gap-1.5 px-4 py-3 border-b border-ink/8" style={{ background: 'var(--glass-bg-soft)' }}>
         <span className="w-3 h-3 rounded-full" style={{ background: '#FF5F57' }} />
         <span className="w-3 h-3 rounded-full" style={{ background: '#FEBC2E' }} />
         <span className="w-3 h-3 rounded-full" style={{ background: '#28C840' }} />
@@ -75,7 +71,7 @@ function Terminal() {
           {t("rd_tag")} · Encore.ts
         </span>
       </div>
-      <div className="px-5 py-5 space-y-1 min-h-[200px]" style={{ background: 'rgba(250,250,247,0.65)' }}>
+      <div className="px-5 py-5 space-y-1 min-h-[200px]" style={{ background: 'rgb(var(--canvas) / 0.6)' }}>
         {TERMINAL_LINES.map((line, i) => (
           <TerminalLine key={i} text={line.text} color={line.color} active={activeIndex >= i} />
         ))}
@@ -127,7 +123,7 @@ export default function BuildingNow() {
 
           {/* Agency */}
           <motion.div custom={0} variants={cardV} className="h-full">
-            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-6 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-6 hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
@@ -170,7 +166,7 @@ export default function BuildingNow() {
                   <span>Scaling</span>
                   <span className="tabular-nums">78%</span>
                 </div>
-                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(10,14,31,0.08)' }}>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgb(var(--ink) / 0.08)' }}>
                   <motion.div
                     className="h-full rounded-full"
                     style={{
@@ -188,7 +184,7 @@ export default function BuildingNow() {
 
           {/* R&D */}
           <motion.div custom={1} variants={cardV} className="h-full">
-            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-5 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="relative h-full p-8 md:p-10 rounded-3xl glass-surface flex flex-col gap-5 hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <span className="eyebrow block mb-3">{t("rd_tag")}</span>

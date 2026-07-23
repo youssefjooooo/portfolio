@@ -35,6 +35,8 @@ const TwitterIcon = ({ size = 15 }: { size?: number }) => (
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import LocaleSwitcher from "@/components/ui/LocaleSwitcher";
+import ThemeToggle from "@/components/ThemeToggle";
+import { WhatsappIcon, PhoneIcon } from "@/components/ui/ContactIcons";
 
 const NAV_KEYS = [
   { key: "work",    n: "01", href: (locale: string) => `/${locale}/work` },
@@ -128,7 +130,7 @@ export default function Navbar() {
               className="relative px-4 py-1.5 rounded-full text-[12px] font-medium text-ink-mid hover:text-ink-strong transition-colors group"
             >
               <span className="relative z-10 capitalize">{t(key)}</span>
-              <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/70 transition-colors duration-300" />
+              <span className="absolute inset-0 rounded-full bg-transparent group-hover:bg-ink/10 transition-colors duration-300" />
             </Link>
           ))}
         </motion.nav>
@@ -144,10 +146,12 @@ export default function Navbar() {
           >
             <LocaleSwitcher />
 
+            <ThemeToggle />
+
             <Link
               href={`/${locale}#contact`}
               onClick={close}
-              className="hidden md:inline-flex items-center gap-1.5 h-11 px-5 rounded-full text-[12px] font-semibold bg-ink text-white tracking-wide transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1A2138] shadow-[0_8px_22px_-6px_rgba(11,16,32,0.45)] hover:shadow-[0_12px_28px_-6px_rgba(78,123,255,0.55)]"
+              className="hidden md:inline-flex items-center gap-1.5 h-11 px-5 rounded-full text-[12px] font-semibold bg-ink text-canvas tracking-wide transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90 shadow-[0_10px_30px_-8px_rgba(88,120,255,0.5)]"
             >
               {t("hire")}
               <ArrowUpRight
@@ -175,7 +179,7 @@ export default function Navbar() {
           transition={{ duration: 0.4 }}
           style={{
             background:
-              "linear-gradient(to bottom, rgba(244,246,251,0.7) 0%, rgba(244,246,251,0) 100%)",
+              "linear-gradient(to bottom, rgb(var(--canvas) / 0.72) 0%, rgb(var(--canvas) / 0) 100%)",
             backdropFilter: "blur(14px)",
             WebkitBackdropFilter: "blur(14px)",
             maskImage:
@@ -196,7 +200,7 @@ export default function Navbar() {
             transition={{ duration: 0.35 }}
             className="fixed inset-0 z-[200] flex flex-col"
             style={{
-              background: "rgba(244,246,251,0.78)",
+              background: "rgb(var(--canvas) / 0.86)",
               WebkitBackdropFilter: "blur(36px) saturate(180%)",
               backdropFilter: "blur(36px) saturate(180%)",
             }}>
@@ -247,7 +251,7 @@ export default function Navbar() {
                     "
                     style={{
                       backgroundImage:
-                        "linear-gradient(135deg, rgba(11,16,32,0.85) 0%, rgba(11,16,32,0.5) 100%)",
+                        "linear-gradient(135deg, rgb(var(--ink) / 0.92) 0%, rgb(var(--ink) / 0.5) 100%)",
                     }}>
                     {t(key)}
                   </span>
@@ -263,19 +267,23 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ delay: 0.4 }}
               className="relative flex items-center justify-between flex-wrap gap-4 px-8 md:px-14 lg:px-20 py-6">
-              <LocaleSwitcher />
+              <div className="flex items-center gap-2">
+                <LocaleSwitcher />
+                <ThemeToggle />
+              </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center justify-end flex-wrap gap-3">
                 {[
-                  { Icon: GithubIcon,   href: "https://github.com",   label: "GitHub"   },
-                  { Icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
-                  { Icon: TwitterIcon,  href: "https://twitter.com",  label: "Twitter"  },
-                ].map(({ Icon, href, label }, i) => (
+                  { Icon: WhatsappIcon, href: "https://wa.me/201040303782", label: "WhatsApp", external: true  },
+                  { Icon: PhoneIcon,    href: "tel:+201040303782",          label: "Call",     external: false },
+                  { Icon: GithubIcon,   href: "https://github.com",         label: "GitHub",   external: true  },
+                  { Icon: LinkedinIcon, href: "https://linkedin.com",       label: "LinkedIn", external: true  },
+                  { Icon: TwitterIcon,  href: "https://twitter.com",        label: "Twitter",  external: true  },
+                ].map(({ Icon, href, label, external }, i) => (
                   <motion.a
                     key={label}
                     href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 + i * 0.06 }}
@@ -286,12 +294,12 @@ export default function Navbar() {
                 ))}
 
                 <a
-                  href="mailto:hello@youssefmahmoud.dev"
+                  href="mailto:hello@youssefmahmoud.com"
                   onClick={close}
                   className="
                     ml-1 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide
-                    bg-ink text-white hover:bg-ink-strong transition-all duration-200 uppercase
-                    shadow-[0_6px_20px_-4px_rgba(11,16,32,0.45)]
+                    bg-ink text-canvas hover:opacity-90 transition-all duration-200 uppercase
+                    shadow-[0_8px_22px_-5px_rgba(88,120,255,0.45)]
                   ">
                   {t("hire")}
                 </a>

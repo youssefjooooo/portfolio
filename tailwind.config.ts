@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,43 +14,40 @@ const config: Config = {
         serif: ["var(--font-serif)", "Times New Roman", "serif"],
       },
       colors: {
-        ink: {
-          DEFAULT: "#0B1020",
-          strong: "rgba(11,16,32,0.92)",
-          mid:    "rgba(11,16,32,0.62)",
-          muted:  "rgba(11,16,32,0.42)",
-          subtle: "rgba(11,16,32,0.22)",
-          faint:  "rgba(11,16,32,0.10)",
+        canvas: {
+          DEFAULT: "rgb(var(--canvas) / <alpha-value>)",
+          deep:    "rgb(var(--canvas-deep) / <alpha-value>)",
         },
-        glass: {
-          DEFAULT:  "rgba(255,255,255,0.55)",
-          soft:     "rgba(255,255,255,0.40)",
-          strong:   "rgba(255,255,255,0.72)",
-          tinted:   "rgba(255,255,255,0.62)",
-          hover:    "rgba(255,255,255,0.78)",
-          border:   "rgba(255,255,255,0.70)",
-          edge:     "rgba(11,16,32,0.06)",
+        ink: {
+          DEFAULT: "rgb(var(--ink) / <alpha-value>)",
+          strong:  "var(--ink-strong)",
+          mid:     "var(--ink-mid)",
+          muted:   "var(--ink-muted)",
+          subtle:  "var(--ink-subtle)",
+          faint:   "var(--ink-faint)",
         },
         accent: {
-          DEFAULT: "#4E7BFF",
-          soft:    "rgba(78,123,255,0.18)",
-          glow:    "rgba(78,123,255,0.35)",
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          violet:  "rgb(var(--accent-violet) / <alpha-value>)",
+          cyan:    "rgb(var(--accent-cyan) / <alpha-value>)",
+          soft:    "rgb(var(--accent) / 0.16)",
+          glow:    "rgb(var(--accent) / 0.40)",
+        },
+        glass: {
+          DEFAULT: "var(--glass-bg)",
+          strong:  "var(--glass-bg-strong)",
+          soft:    "var(--glass-bg-soft)",
+          border:  "var(--glass-border)",
         },
       },
       boxShadow: {
-        glass:
-          "0 1px 0 0 rgba(255,255,255,0.85) inset, 0 12px 40px -8px rgba(8,22,58,0.18), 0 4px 14px -4px rgba(8,22,58,0.10)",
-        "glass-lg":
-          "0 1px 0 0 rgba(255,255,255,0.95) inset, 0 24px 64px -12px rgba(8,22,58,0.24), 0 8px 24px -6px rgba(8,22,58,0.14)",
-        "glass-sm":
-          "0 1px 0 0 rgba(255,255,255,0.8) inset, 0 6px 18px -6px rgba(8,22,58,0.14)",
-        "glow-blue": "0 0 32px rgba(78,123,255,0.35)",
-        "glow-soft": "0 0 60px rgba(255,255,255,0.55)",
+        "glow-blue": "0 0 36px rgb(var(--accent) / 0.40)",
+        "glow-soft": "0 0 60px rgb(var(--accent) / 0.22)",
       },
       backdropBlur: {
         xs: "4px",
         glass: "22px",
-        dense: "32px",
+        dense: "34px",
       },
       keyframes: {
         shimmer: {
@@ -93,6 +91,14 @@ const config: Config = {
           "0%":   { transform: "scale(0.8)", opacity: "0.8" },
           "100%": { transform: "scale(2.4)", opacity: "0"  },
         },
+        "bloom-drift": {
+          "0%, 100%": { transform: "translate3d(-2%, 1%, 0) scale(1.06)" },
+          "50%":      { transform: "translate3d(3%, -4%, 0) scale(1.18)" },
+        },
+        "bloom-drift-alt": {
+          "0%, 100%": { transform: "translate3d(3%, -2%, 0) scale(1.12)" },
+          "50%":      { transform: "translate3d(-4%, 3%, 0) scale(1)"    },
+        },
       },
       animation: {
         shimmer:           "shimmer 2.6s ease-in-out infinite",
@@ -105,6 +111,8 @@ const config: Config = {
         "pulse-soft":      "pulse-soft 2.4s ease-in-out infinite",
         "spin-slow":       "spin-slow 22s linear infinite",
         "ring-ripple":     "ring-ripple 2.4s ease-out infinite",
+        "bloom-drift":     "bloom-drift 22s ease-in-out infinite",
+        "bloom-drift-alt": "bloom-drift-alt 28s ease-in-out infinite",
       },
     },
   },

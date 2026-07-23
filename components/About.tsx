@@ -70,7 +70,7 @@ export default async function About() {
 
           {/* Identity — tall portrait */}
           <RevealText delay={0.05} className="md:row-span-2">
-            <div className="relative h-full p-8 rounded-3xl glass-surface flex flex-col items-center justify-center text-center overflow-hidden gap-5 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="relative h-full p-8 rounded-3xl glass-surface flex flex-col items-center justify-center text-center overflow-hidden gap-5 hover:bg-glass-strong transition-all duration-500">
               <div
                 aria-hidden="true"
                 className="absolute inset-0 pointer-events-none"
@@ -90,7 +90,7 @@ export default async function About() {
               </div>
               <a
                 href="#contact"
-                className="relative inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-ink text-white text-xs font-semibold tracking-wide hover:-translate-y-0.5 transition-all duration-300 shadow-[0_6px_18px_-6px_rgba(10,14,31,0.45)]"
+                className="relative inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-ink text-canvas text-xs font-semibold tracking-wide hover:-translate-y-0.5 transition-all duration-300 shadow-[0_8px_20px_-6px_rgba(88,120,255,0.45)]"
               >
                 Get in touch
                 <ArrowUpRight size={13} strokeWidth={2.5} className={isAr ? '-scale-x-100' : ''} />
@@ -100,7 +100,7 @@ export default async function About() {
 
           {/* Currently — wide quote-style */}
           <RevealText delay={0.1} className="md:col-span-2">
-            <div className="relative h-full p-8 rounded-3xl glass-surface hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="relative h-full p-8 rounded-3xl glass-surface hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-center justify-between mb-4">
                 <p className="eyebrow">Currently</p>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold glass-light text-ink-strong tracking-widest">
@@ -119,7 +119,7 @@ export default async function About() {
 
           {/* Location */}
           <RevealText delay={0.15}>
-            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-center gap-2.5">
                 <span className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-ink-strong">
                   <MapPin size={16} strokeWidth={1.8} />
@@ -138,7 +138,7 @@ export default async function About() {
 
           {/* Languages */}
           <RevealText delay={0.2}>
-            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-center gap-2.5">
                 <span className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-ink-strong">
                   <Languages size={16} strokeWidth={1.8} />
@@ -154,7 +154,7 @@ export default async function About() {
 
           {/* Socials */}
           <RevealText delay={0.25}>
-            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="h-full p-6 rounded-3xl glass-surface flex flex-col gap-3 hover:bg-glass-strong transition-all duration-500">
               <div className="flex items-center gap-2.5">
                 <span className="w-9 h-9 rounded-xl glass-light flex items-center justify-center text-ink-strong">
                   <Mail size={16} strokeWidth={1.8} />
@@ -167,7 +167,7 @@ export default async function About() {
                     key={label}
                     href={href}
                     aria-label={label}
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-xl glass-light text-ink-strong hover:bg-white/90 hover:-translate-y-0.5 transition-all duration-300"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-xl glass-light text-ink-strong hover:bg-glass-strong hover:-translate-y-0.5 transition-all duration-300"
                   >
                     <Icon size={15} />
                   </a>
@@ -178,7 +178,7 @@ export default async function About() {
 
           {/* Bio — wide */}
           <RevealText delay={0.3} className="md:col-span-2">
-            <div className="h-full p-8 rounded-3xl glass-surface hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="h-full p-8 rounded-3xl glass-surface hover:bg-glass-strong transition-all duration-500">
               <p className="eyebrow mb-4">The Story</p>
               <p className="text-ink-mid leading-relaxed text-[15px]">
                 {t('body')}
@@ -188,13 +188,13 @@ export default async function About() {
 
           {/* Interests — wide */}
           <RevealText delay={0.35} className="md:col-span-3">
-            <div className="h-full p-8 rounded-3xl glass-surface hover:bg-[rgba(255,255,255,0.78)] transition-all duration-500">
+            <div className="h-full p-8 rounded-3xl glass-surface hover:bg-glass-strong transition-all duration-500">
               <p className="eyebrow mb-5">When Not Coding</p>
               <div className="flex flex-wrap gap-2">
                 {INTERESTS.map(({ key, Icon }) => (
                   <span
                     key={key}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-light text-sm font-semibold text-ink-strong hover:bg-white/90 transition-all duration-300 cursor-default"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl glass-light text-sm font-semibold text-ink-strong hover:bg-glass-strong transition-all duration-300 cursor-default"
                   >
                     <Icon size={14} strokeWidth={1.8} />
                     {t(key)}

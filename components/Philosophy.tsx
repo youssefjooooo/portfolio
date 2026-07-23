@@ -43,7 +43,7 @@ export default async function Philosophy() {
             <div className="grid grid-cols-1 gap-3 pt-4">
               {PRINCIPLES.map(({ titleKey, bodyKey, Icon, n }, i) => (
                 <RevealText key={titleKey} delay={0.2 + i * 0.1}>
-                  <div className="group relative flex gap-5 p-6 rounded-2xl glass-surface hover:bg-[rgba(255,255,255,0.85)] transition-all duration-500 hover:-translate-y-0.5">
+                  <div className="group relative flex gap-5 p-6 rounded-2xl glass-surface hover:bg-glass-strong transition-all duration-500 hover:-translate-y-0.5">
                     <span className="serif-italic text-2xl text-ink-muted shrink-0 w-10 leading-none pt-1">{n}</span>
                     <div className="flex-1">
                       <div className="flex items-center gap-2.5 mb-2">

@@ -188,12 +188,11 @@ export default function PhilosophyDiagram() {
                 textAnchor="middle"
                 fontSize={10}
                 fontWeight="700"
-                fill="rgba(11,16,32,0.45)"
                 letterSpacing="0.12em"
                 initial={{ opacity: 0, y: 20 }}
                 animate={active ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.5 + i * 0.1 }}
-                style={{ textTransform: "uppercase", userSelect: "none" }}>
+                style={{ textTransform: "uppercase", userSelect: "none", fill: "rgb(var(--ink) / 0.55)" }}>
                 {t(n.labelKey as Parameters<typeof t>[0])}
               </motion.text>
             </g>

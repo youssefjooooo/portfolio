@@ -46,9 +46,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAFAF7",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAFAF8" },
+    { media: "(prefers-color-scheme: dark)", color: "#08090E" },
+  ],
+  colorScheme: "dark light",
 };
+
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':true;var e=document.documentElement;e.classList.toggle('dark',d);e.style.colorScheme=d?'dark':'light';}catch(e){}})();`;
 
 export default async function RootLayout({
   children,
@@ -65,6 +70,7 @@ export default async function RootLayout({
       className={`${cairo.variable} ${instrumentSerif.variable}`}
       suppressHydrationWarning>
       <body className="text-ink font-sans antialiased">
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {children}
       </body>
     </html>

@@ -40,14 +40,14 @@ export default function LocaleSwitcher() {
         />
         <span
           className={`relative z-10 inline-flex items-center justify-center w-[42px] h-9 text-[11px] transition-colors duration-300 ${
-            isEn ? "text-white" : "text-ink-mid"
+            isEn ? "text-canvas" : "text-ink-mid"
           }`}
         >
           EN
         </span>
         <span
           className={`relative z-10 inline-flex items-center justify-center w-[42px] h-9 text-[11px] transition-colors duration-300 ${
-            !isEn ? "text-white" : "text-ink-mid"
+            !isEn ? "text-canvas" : "text-ink-mid"
           }`}
         >
           AR

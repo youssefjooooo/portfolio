@@ -43,7 +43,7 @@ export default function MouseFollower() {
       const baseSize  = hovering ? 56 : 34
       const size      = pressed ? baseSize * 0.78 : baseSize
       const tint      = hovering ? 'rgba(78,123,255,0.16)' : 'rgba(11,16,32,0)'
-      const border    = hovering ? 'rgba(78,123,255,0.55)' : 'rgba(11,16,32,0.45)'
+      const border    = hovering ? 'rgba(78,123,255,0.55)' : 'rgb(var(--ink) / 0.45)'
 
       if (dot.current) {
         dot.current.style.transform = `translate3d(${mx - 4}px, ${my - 4}px, 0)`
@@ -111,7 +111,7 @@ export default function MouseFollower() {
         style={{
           width:  34,
           height: 34,
-          border: '1.5px solid rgba(11,16,32,0.45)',
+          border: '1.5px solid rgb(var(--ink) / 0.45)',
           background: 'transparent',
           transition:
             'width 280ms cubic-bezier(0.16,1,0.3,1), height 280ms cubic-bezier(0.16,1,0.3,1), background 220ms ease, border-color 220ms ease',
@@ -128,7 +128,7 @@ export default function MouseFollower() {
         style={{
           width:  8,
           height: 8,
-          background: '#0B1020',
+          background: 'rgb(var(--ink))',
           transition: 'opacity 200ms ease',
           willChange: 'transform, opacity',
         }}

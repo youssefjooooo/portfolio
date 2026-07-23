@@ -8,6 +8,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import LetterReveal from "@/components/LetterReveal";
 import RevealText from "@/components/RevealText";
+import HeroVisual from "@/components/HeroVisual";
 import GlassButton from "@/components/ui/GlassButton";
 import { ArrowLeft, ArrowDown } from "lucide-react";
 
@@ -27,13 +28,7 @@ export default async function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-36 pb-24 text-center overflow-hidden">
 
-      {/* Soft monochrome luminance behind the type */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div
-          className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[80vw] h-[80vw] rounded-full opacity-70 animate-[float-y_8s_ease-in-out_infinite]"
-          style={{ background: "radial-gradient(circle, rgba(255,255,255,0.85), transparent 60%)" }}
-        />
-      </div>
+      <HeroVisual />
 
       {/* ── Availability tag ─────────────────────────── */}
       <RevealText delay={0} className="mb-12">
@@ -97,7 +92,7 @@ export default async function Hero() {
           {HERO_TECH.map((tech, i) => (
             <span
               key={tech}
-              className="px-3.5 py-1.5 glass-pill text-ink-mid text-[11px] font-semibold tracking-wide hover:text-ink-strong hover:bg-white/85 transition-all duration-300 select-none cursor-default animate-[float-y_6s_ease-in-out_infinite]"
+              className="px-3.5 py-1.5 glass-pill text-ink-mid text-[11px] font-semibold tracking-wide hover:text-ink-strong hover:bg-glass-strong transition-all duration-300 select-none cursor-default animate-[float-y_6s_ease-in-out_infinite]"
               style={{ animationDelay: `${i * 0.35}s` }}
             >
               {tech}

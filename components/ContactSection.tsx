@@ -9,6 +9,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import RevealText from "@/components/RevealText";
 import GlassButton from "@/components/ui/GlassButton";
 import RandomFooterMessage from "@/components/RandomFooterMessage";
+import { WhatsappIcon, PhoneIcon } from "@/components/ui/ContactIcons";
 import { ArrowLeft } from "lucide-react";
 
 export default async function ContactSection() {
@@ -71,9 +72,30 @@ export default async function ContactSection() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-10 flex flex-wrap items-end justify-between md:gap-10 gap-3 w-full">
-          <span className="text-sm font-bold font-mono text-ink-mid">
-            &lt;Youssef Mahmoud /&gt;
-          </span>
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-bold font-mono text-ink-mid">
+              &lt;Youssef Mahmoud /&gt;
+            </span>
+            <span aria-hidden="true" className="h-4 w-px bg-ink/15" />
+            <div className="flex items-center gap-2">
+              <a
+                href="https://wa.me/201040303782"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="flex h-9 w-9 items-center justify-center rounded-full glass-pill text-ink-mid transition-colors hover:text-ink-strong"
+              >
+                <WhatsappIcon size={14} />
+              </a>
+              <a
+                href="tel:+201040303782"
+                aria-label="Call"
+                className="flex h-9 w-9 items-center justify-center rounded-full glass-pill text-ink-mid transition-colors hover:text-ink-strong"
+              >
+                <PhoneIcon size={14} />
+              </a>
+            </div>
+          </div>
           <RandomFooterMessage messages={tf.raw("built_messages") as string[]} />
           <p className="text-xs text-ink-muted">
             © {new Date().getFullYear()} {tf("copy")}

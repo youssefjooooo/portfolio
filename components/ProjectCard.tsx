@@ -90,7 +90,7 @@ export default function ProjectCard({
         className={`relative h-full rounded-3xl overflow-hidden glass-surface group transition-[background] duration-500 ${
           isFeatured ? 'min-h-[420px]' : 'min-h-[280px]'
         }`}
-        style={{ background: hovered ? 'rgba(255,255,255,0.78)' : 'rgba(255,255,255,0.55)' }}
+        style={{ background: hovered ? 'var(--glass-bg-strong)' : 'var(--glass-bg)' }}
       >
         {/* Cursor spotlight */}
         <motion.div

@@ -50,20 +50,20 @@ export default function GlassButton({
 
   const variants = {
     primary: [
-      'bg-ink text-white',
-      'shadow-[0_10px_28px_-8px_rgba(11,16,32,0.5)]',
-      'hover:shadow-[0_14px_36px_-8px_rgba(78,123,255,0.55)]',
-      'hover:bg-[#1A2138]',
+      'bg-ink text-canvas',
+      'shadow-[0_12px_32px_-10px_rgba(88,120,255,0.5)]',
+      'hover:shadow-[0_16px_42px_-10px_rgba(88,120,255,0.62)]',
+      'hover:opacity-90',
       'active:scale-[0.97]',
     ].join(' '),
     glass: [
       'glass-pill text-ink-strong',
-      'hover:bg-white/85',
+      'hover:brightness-105',
     ].join(' '),
     ghost: [
-      'bg-white/30 backdrop-blur-glass border border-white/65 text-ink-mid',
-      'hover:bg-white/55 hover:text-ink-strong hover:border-white/90',
-      'shadow-[0_1px_0_0_rgba(255,255,255,0.8)_inset,0_6px_18px_-6px_rgba(8,22,58,0.14)]',
+      'bg-glass-soft backdrop-blur-glass border border-glass-border text-ink-mid',
+      'hover:bg-glass hover:text-ink-strong',
+      'shadow-[0_8px_22px_-12px_rgba(0,0,0,0.45)]',
     ].join(' '),
   }
 

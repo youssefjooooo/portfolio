@@ -21,8 +21,8 @@ function TechPill({ tech }: { tech: Technology }) {
       onMouseLeave={() => setHovered(false)}
       className="flex items-center gap-2 px-6 py-3 glass-pill mx-2 cursor-default shrink-0 select-none transition-all duration-300"
       style={{
-        background: hovered ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.6)",
-        color: hovered ? "rgba(10,14,31,0.95)" : "rgba(10,14,31,0.55)",
+        background: hovered ? "var(--glass-bg-strong)" : "var(--glass-bg)",
+        color: hovered ? "var(--ink-strong)" : "var(--ink-mid)",
         transform: hovered ? "translateY(-3px) scale(1.04)" : "translateY(0) scale(1)",
       }}>
       <span className="text-base font-semibold whitespace-nowrap tracking-tight">

@@ -48,7 +48,7 @@ export default function ProjectFeaturesSection({
               <ul className="space-y-3">
                 {features.map((feature, i) => (
                   <RevealText key={i} delay={0.15 + i * 0.07} y={14}>
-                    <li className="flex items-start gap-3 p-3 rounded-2xl glass-light hover:bg-white/85 transition-all duration-300">
+                    <li className="flex items-start gap-3 p-3 rounded-2xl glass-light hover:bg-glass-strong transition-all duration-300">
                       <span className="mt-0.5 text-accent text-sm shrink-0">◆</span>
                       <span className="text-ink-strong text-sm leading-relaxed">{feature}</span>
                     </li>
